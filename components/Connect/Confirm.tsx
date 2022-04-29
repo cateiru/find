@@ -24,8 +24,10 @@ const Confirm: React.FC<{isAvailable: boolean; permissionReq: () => void}> = ({
   React.useEffect(() => {
     if (isAvailable) {
       confirmDialog.onOpen();
+      noAvailableDialog.onClose();
     } else {
       noAvailableDialog.onOpen();
+      confirmDialog.onClose();
     }
   }, [isAvailable]);
 

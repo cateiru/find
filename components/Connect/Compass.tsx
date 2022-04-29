@@ -7,7 +7,9 @@ const Compass: React.FC<{degrees: number}> = ({degrees}) => {
 
   React.useEffect(() => {
     if (canvasRef.current) {
-      canvasRef.current.style.transform = `rotate(${Math.floor(degrees)}deg)`;
+      canvasRef.current.style.transform = `rotate(${Math.floor(
+        360 - degrees
+      )}deg)`;
     }
   }, [degrees]);
 

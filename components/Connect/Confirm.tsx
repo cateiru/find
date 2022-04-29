@@ -68,8 +68,8 @@ const Confirm: React.FC<{isAvailable: boolean; permissionReq: () => void}> = ({
                 colorScheme="pink"
                 width={{base: '100%', md: 'auto'}}
                 onClick={() => {
-                  confirmDialog.onClose();
                   permissionReq();
+                  confirmDialog.onClose();
                 }}
               >
                 アクセスを許可する

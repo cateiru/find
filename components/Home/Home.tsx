@@ -16,7 +16,7 @@ const Home = () => {
   const router = useRouter();
 
   const handleChange = () => {
-    if (/ID-[0-9A-Z]{10}/.test(id)) {
+    if (/[0-9A-Z]{10}/.test(id)) {
       router.push(`/connect?id=${encodeURI(id)}`);
     } else {
       setErr(true);
@@ -29,7 +29,7 @@ const Home = () => {
       key += Math.floor(Math.random() * 16).toString(16);
     }
 
-    const newId = `ID-${key.toUpperCase()}`;
+    const newId = key.toUpperCase();
 
     router.push(`/connect?id=${encodeURI(newId)}&new`);
   };
@@ -53,7 +53,7 @@ const Home = () => {
                   size="md"
                   width="95%"
                   colorScheme="pink"
-                  placeholder="ID-XXXXXXXXXX"
+                  placeholder="XXXXXXXXXX"
                   value={id}
                   isInvalid={err}
                   onChange={e => {

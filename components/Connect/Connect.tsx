@@ -1,11 +1,14 @@
 import {useRouter} from 'next/router';
 import React from 'react';
+import Confirm from './Confirm';
+import useDirection from './useDirection';
 import useGeolocation from './useGeolocation';
 
-const Connect = () => {
+const Connect = React.memo(() => {
   const [id, setId] = React.useState('');
   const [isNew, setIsNew] = React.useState(false);
   const [isAvailable, position, getCurrentPosition] = useGeolocation();
+  const [isAvailableDirection, degrees, permissionReq] = useDirection();
 
   const router = useRouter();
 
@@ -35,7 +38,19 @@ const Connect = () => {
     return () => clearInterval(interval);
   }, [id, isAvailable]);
 
-  return <>{isAvailable ? <>{JSON.stringify(position)}</> : <>f</>}</>;
-};
+  return (
+    <>
+      <Confirm
+        isAvailable={isAvailable && isAvailableDirection}
+        permissionReq={permissionReq}
+      />
+      {JSON.stringify(position)}
+      <br />
+      {JSON.stringify(degrees)}
+    </>
+  );
+});
+
+Connect.displayName = 'connect';
 
 export default Connect;

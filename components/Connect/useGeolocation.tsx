@@ -19,10 +19,16 @@ const useGeolocation = (): [
   }, [isAvailable]);
 
   const getCurrentPosition = () => {
-    navigator.geolocation.getCurrentPosition(position => {
-      const {latitude, longitude} = position.coords;
-      setPosition({latitude, longitude});
-    });
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const {latitude, longitude} = position.coords;
+        setPosition({latitude, longitude});
+      },
+      err => {
+        // TODO: err.codeで分けたい
+        setAvailable(false);
+      }
+    );
   };
 
   return [isAvailable, position, getCurrentPosition];

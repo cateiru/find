@@ -39,7 +39,7 @@ const useDirection = (): [boolean, number, () => void] => {
   const permissionReq = () => {
     if (os === 'iphone') {
       // iPhoneのみ動作する
-      // TODO: 型がないのでちゃんとしたい
+      // 他OSでは実装されていないためRuntime Errorが起きる
       DeviceOrientationEvent.requestPermission().then((response: string) => {
         if (response === 'granted') {
           window.addEventListener('deviceorientation', orientationEvent);

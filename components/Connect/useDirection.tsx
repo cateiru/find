@@ -14,6 +14,8 @@ const useDirection = (): [boolean, number, () => void] => {
     const thisDeviceOS = getOS();
     setOS(thisDeviceOS);
 
+    console.log(thisDeviceOS);
+
     if (thisDeviceOS === 'pc') {
       setAvailable(false);
     }

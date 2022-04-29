@@ -3,6 +3,7 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
+  ModalCloseButton,
   ModalBody,
   Button,
   Text,
@@ -17,19 +18,23 @@ const Confirm: React.FC<{isAvailable: boolean; permissionReq: () => void}> = ({
   isAvailable,
   permissionReq,
 }) => {
-  const confirmDialog = useDisclosure({isOpen: isAvailable});
-  const noAvailableDialog = useDisclosure({isOpen: !isAvailable});
+  const confirmDialog = useDisclosure();
+  const noAvailableDialog = useDisclosure();
+
+  React.useEffect(() => {
+    if (isAvailable) {
+      confirmDialog.onOpen();
+    } else {
+      noAvailableDialog.onOpen();
+    }
+  }, [isAvailable]);
 
   return (
     <>
-      <Modal
-        isOpen={confirmDialog.isOpen}
-        onClose={confirmDialog.onClose}
-        isCentered
-      >
+      <Modal isOpen={confirmDialog.isOpen} onClose={() => {}} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>アクセスを許可してください。</ModalHeader>
+          <ModalHeader>アクセスを許可してください</ModalHeader>
           <ModalBody>
             <Text>
               <Text as="span" fontWeight="bold">
@@ -80,6 +85,7 @@ const Confirm: React.FC<{isAvailable: boolean; permissionReq: () => void}> = ({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>この端末では利用できません</ModalHeader>
+          <ModalCloseButton />
           <ModalBody mb="1rem">
             <Text>この端末では以下の理由により使用できません。</Text>
             <UnorderedList mt="1rem">

@@ -7,7 +7,9 @@ import useGeolocation from './useGeolocation';
 const Connect = React.memo(() => {
   const [id, setId] = React.useState('');
   const [isNew, setIsNew] = React.useState(false);
-  const [isAvailable, position, getCurrentPosition] = useGeolocation();
+  const [isAvailable, setIsAvailable] = React.useState(false);
+  const [isAvailableGeolocation, position, getCurrentPosition] =
+    useGeolocation();
   const [isAvailableDirection, degrees, permissionReq] = useDirection();
 
   const router = useRouter();
@@ -17,7 +19,11 @@ const Connect = React.memo(() => {
     const query = router.query;
 
     if (typeof query['id'] === 'string') {
-      setId(query['id']);
+      const queryId = query['id'];
+      if (/[0-9A-Z]{10}/.test(queryId)) {
+        setIsAvailable(true);
+        setId(query['id']);
+      }
     }
     if (typeof query['new'] !== 'undefined') {
       setIsNew(true);
@@ -28,7 +34,7 @@ const Connect = React.memo(() => {
   React.useEffect(() => {
     let interval: NodeJS.Timeout;
 
-    if (id.length !== 0 && isAvailable) {
+    if (id.length !== 0 && isAvailableGeolocation) {
       interval = setInterval(() => {
         console.log('get location');
         getCurrentPosition();
@@ -36,12 +42,14 @@ const Connect = React.memo(() => {
     }
 
     return () => clearInterval(interval);
-  }, [id, isAvailable]);
+  }, [id, isAvailableGeolocation]);
 
   return (
     <>
       <Confirm
-        isAvailable={isAvailable && isAvailableDirection}
+        isAvailable={
+          isAvailableGeolocation && isAvailableDirection && isAvailable
+        }
         permissionReq={permissionReq}
       />
       {JSON.stringify(position)}

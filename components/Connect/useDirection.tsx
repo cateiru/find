@@ -3,11 +3,12 @@ import {compassHeading} from '../../utils/calc';
 import {getOS} from '../../utils/os';
 
 const useDirection = (): [boolean, number, () => void] => {
-  const [isAvailable, setAvailable] = React.useState(false);
+  const [isAvailable, setAvailable] = React.useState(true);
   const [os, setOS] = React.useState(getOS());
   const [degrees, setDegrees] = React.useState(0);
 
   React.useEffect(() => {
+    console.log(os)
     if(os === 'pc') {
       setAvailable(false)
     }

@@ -1,24 +1,38 @@
 {
-  "name": "find",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "next": "12.1.5",
-    "react": "18.1.0",
-    "react-dom": "18.1.0"
-  },
-  "devDependencies": {
-    "@types/node": "17.0.30",
-    "@types/react": "18.0.8",
-    "@types/react-dom": "18.0.3",
-    "eslint": "8.14.0",
-    "eslint-config-next": "12.1.5",
-    "typescript": "4.6.4"
-  }
+    "name": "find",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "gts lint",
+        "clean": "gts clean",
+        "compile": "tsc",
+        "fix": "gts fix",
+        "prepare": "yarn run compile",
+        "pretest": "yarn run compile",
+        "posttest": "yarn run lint"
+    },
+    "dependencies": {
+        "next": "12.1.5",
+        "react": "18.1.0",
+        "react-dom": "18.1.0"
+    },
+    "devDependencies": {
+        "@types/node": "^14.11.2",
+        "@types/react": "18.0.6",
+        "@types/react-dom": "18.0.2",
+        "@typescript-eslint/eslint-plugin": "^5.20.0",
+        "eslint": "8.14.0",
+        "eslint-config-next": "12.1.5",
+        "eslint-plugin-header": "^3.1.1",
+        "eslint-plugin-import": "^2.25.2",
+        "eslint-plugin-jsdoc": "^38.0.6",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-prefer-arrow": "^1.2.3",
+        "eslint-plugin-prettier": "^4.0.0",
+        "gts": "^3.1.0",
+        "typescript": "^4.0.3"
+    }
 }

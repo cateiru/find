@@ -1,7 +1,13 @@
 import type {NextPage} from 'next';
+import Title from '../components/Common/Title';
+import Home from '../components/Home/Home';
 
-const Home: NextPage = () => {
-  return <></>;
+const Index: NextPage = () => {
+  return (
+    <Title name="ふぁいんど！">
+      <Home />
+    </Title>
+  );
 };
 
-export default Home;
+export default Index;

@@ -1,6 +1,9 @@
+import {Center, Heading, Box} from '@chakra-ui/react';
 import {useRouter} from 'next/router';
 import React from 'react';
+import Compass from './Compass';
 import Confirm from './Confirm';
+import Share from './Share';
 import useDirection from './useDirection';
 import useGeolocation from './useGeolocation';
 
@@ -11,6 +14,7 @@ const Connect = React.memo(() => {
   const [isAvailableGeolocation, position, getCurrentPosition] =
     useGeolocation();
   const [isAvailableDirection, degrees, permissionReq] = useDirection();
+  const [distance, setDistance] = React.useState(0);
 
   const router = useRouter();
 
@@ -55,6 +59,16 @@ const Connect = React.memo(() => {
       {JSON.stringify(position)}
       <br />
       {JSON.stringify(degrees)}
+      <Center height="95vh">
+        <Box>
+          <Center>
+            <Compass degrees={degrees} />
+          </Center>
+
+          <Heading textAlign="center">あと、{distance}m</Heading>
+          {isNew && <Share id={id} />}
+        </Box>
+      </Center>
     </>
   );
 });

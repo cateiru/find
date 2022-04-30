@@ -13,6 +13,10 @@ const Footer = () => {
         <Link href="https://cateiru.com" isExternal>
           cateiru
         </Link>
+        &nbsp;-&nbsp;
+        <Link href="https://github.com/cateiru/find" isExternal>
+          GitHub
+        </Link>
       </Text>
     </>
   );

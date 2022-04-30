@@ -6,6 +6,7 @@ import Confirm from './Confirm';
 import Share from './Share';
 import useDirection from './useDirection';
 import useGeolocation from './useGeolocation';
+import useSocket from './useSocket';
 
 const Connect = React.memo(() => {
   const [id, setId] = React.useState('');
@@ -15,6 +16,7 @@ const Connect = React.memo(() => {
     useGeolocation();
   const [isAvailableDirection, degrees, permissionReq] = useDirection();
   const [distance, setDistance] = React.useState(0);
+  const [partnerPosition, send, connect] = useSocket();
 
   const router = useRouter();
 
@@ -27,6 +29,7 @@ const Connect = React.memo(() => {
       if (/[0-9A-Z]{10}/.test(queryId)) {
         setIsAvailable(true);
         setId(query['id']);
+        connect(query['id']);
       }
     }
     if (typeof query['new'] !== 'undefined') {
@@ -48,6 +51,13 @@ const Connect = React.memo(() => {
     return () => clearInterval(interval);
   }, [id, isAvailableGeolocation]);
 
+  React.useEffect(() => {
+    send({
+      lat: position.latitude,
+      lon: position.longitude,
+    });
+  }, [position]);
+
   return (
     <>
       <Confirm
@@ -57,6 +67,8 @@ const Connect = React.memo(() => {
         permissionReq={permissionReq}
       />
       {JSON.stringify(position)}
+      <br />
+      {JSON.stringify(partnerPosition)}
       <br />
       {JSON.stringify(degrees)}
       <Center height="95vh">

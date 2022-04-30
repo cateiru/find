@@ -1,2 +1,8 @@
 service: find-backend
 runtime: nodejs14
+
+manual_scaling:
+  instances: 1
+
+network:
+  session_affinity: true

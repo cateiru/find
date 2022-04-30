@@ -6,13 +6,9 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ['https://find.cateiru.com/', 'http://192.168.3.253:3000'],
+    origin: 'https://find.cateiru.com',
     credentials: true,
   },
-});
-
-app.get('/', (req, res) => {
-  res.send('hello');
 });
 
 io.on('connection', socket => {

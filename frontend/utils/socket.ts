@@ -1,6 +1,6 @@
 import {io, Socket} from 'socket.io-client';
 
-const API_ENDPOINT = 'wss://api.find.cateiru.com';
+const API_ENDPOINT = 'wss://find-backend-dot-cateiru.an.r.appspot.com';
 
 export interface Position {
   lat: number;

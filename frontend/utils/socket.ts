@@ -11,7 +11,9 @@ export class ConnectSocket {
   private socket: Socket;
 
   constructor() {
-    this.socket = io(API_ENDPOINT);
+    this.socket = io(API_ENDPOINT, {
+      withCredentials: true,
+    });
   }
 
   public connect(id: string) {

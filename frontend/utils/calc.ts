@@ -41,14 +41,17 @@ export const compassHeading = (
 // ヒュベニの近似式を使用して2地点の緯度経度から相対距離を求める
 // ref. https://komoriss.com/calculate-distance-between-two-points-from-latitude-and-longitude/
 export const calcPosition = (current: Position, target: Position) => {
-  const latDiff = Math.abs(current.lat - target.lat); // 2点の緯度差
-  const lonDiff = Math.abs(current.lon - target.lon); // 2点の軽度差
+  const latA = current.lat - target.lat;
+  const lonA = current.lon - target.lon;
+
+  const latDiff = Math.abs(latA); // 2点の緯度差
+  const lonDiff = Math.abs(lonA); // 2点の軽度差
   const ave = (latDiff + lonDiff) / 2;
 
   const d =
     Math.sqrt(m(ave) * latDiff) ^ (2 + n(ave) * Math.cos(ave) * lonDiff) ^ 2;
 
-  const direction = Math.atan(latDiff / lonDiff);
+  const direction = Math.asin(latA / lonA);
 
   return [d, direction];
 };

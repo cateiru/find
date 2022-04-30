@@ -92,6 +92,8 @@ const Connect = React.memo(() => {
       {JSON.stringify(partnerPosition)}
       <br />
       {JSON.stringify(degrees)}
+      <br />
+      {distance}
       <Center height="95vh">
         <Box>
           <Center>

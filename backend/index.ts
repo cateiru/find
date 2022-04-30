@@ -6,7 +6,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'https://find.cateiru.com',
+    origin: ['https://find.cateiru.com', "http://192.168.3.253:3000"],
   },
 });
 
@@ -19,7 +19,7 @@ io.on('connection', socket => {
   });
 
   socket.on('client2server', data => {
-    io.to(room).emit('server2client', {lat: data.lat, lon: data.lon});
+    socket.broadcast.to(room).emit('server2client', {lat: data.lat, lon: data.lon});
   });
 });
 

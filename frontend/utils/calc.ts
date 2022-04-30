@@ -41,25 +41,38 @@ export const compassHeading = (
 // ヒュベニの近似式を使用して2地点の緯度経度から相対距離を求める
 // ref. https://komoriss.com/calculate-distance-between-two-points-from-latitude-and-longitude/
 export const calcPosition = (current: Position, target: Position) => {
-  const latA = current.lat - target.lat;
-  const lonA = current.lon - target.lon;
-
-  const latDiff = Math.abs(latA); // 2点の緯度差
-  const lonDiff = Math.abs(lonA); // 2点の軽度差
-  const ave = (latDiff + lonDiff) / 2;
-
-  const d =
-    Math.sqrt(m(ave) * latDiff) ^ (2 + n(ave) * Math.cos(ave) * lonDiff) ^ 2;
-
-  const direction = Math.asin(latA / lonA);
-
-  return [d, direction];
+  return Math.sqrt(
+    (((6334834 /
+      Math.sqrt(
+        (1 -
+          0.006674 *
+            Math.sin((((current.lat + target.lat) / 2) * Math.PI) / 180)) ^
+          2 ^
+          3
+      )) *
+      (current.lat - target.lat) *
+      Math.PI) /
+      180) ^
+      (2 +
+        ((6377397 /
+          Math.sqrt(
+            (1 -
+              0.006674 *
+                Math.sin((((current.lat + target.lat) / 2) * Math.PI) / 180)) ^
+              2
+          )) *
+          cos((((current.lat + target.lat) / 2) * Math.PI) / 180) *
+          (current.lon - target.lon) *
+          Math.PI) /
+          180) ^
+      2
+  );
 };
 
-const m = (ave: number): number => {
-  return 6334834 / Math.sqrt((1 - 0.0066744 * Math.sin(ave)) ^ 2 ^ 3);
-};
+export const calcDirec = (current: Position, target: Position) => {
+  const y = -(target.lon - current.lon);
+  const x = target.lat - current.lat;
+  const d = Math.atan2(y, x);
 
-const n = (ave: number): number => {
-  return 6377397 / Math.sqrt((1 - 0.0066744 * Math.sin(ave)) ^ 2);
+  return d * (180 / Math.PI);
 };

@@ -1,7 +1,7 @@
 import {Center, Heading, Box} from '@chakra-ui/react';
 import {useRouter} from 'next/router';
 import React from 'react';
-import {calcPosition} from '../../utils/calc';
+import {calcDirec, calcPosition} from '../../utils/calc';
 import Compass from './Compass';
 import Confirm from './Confirm';
 import Share from './Share';
@@ -66,16 +66,17 @@ const Connect = React.memo(() => {
       position.lat !== 0 &&
       position.lon !== 0
     ) {
-      const calc = calcPosition(position, partnerPosition);
-      let distance = calc[0];
-      const direction = calc[1];
+      let distance = calcPosition(position, partnerPosition);
 
       if (distance < 0) {
         distance = 0;
       }
 
       setDistance(Math.floor(distance));
-      setDirection(direction);
+
+      const d = calcDirec(position, partnerPosition);
+
+      setDirection(d);
     }
   }, [position, partnerPosition]);
 

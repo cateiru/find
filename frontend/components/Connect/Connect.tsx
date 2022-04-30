@@ -1,7 +1,7 @@
 import {Center, Heading, Box} from '@chakra-ui/react';
 import {useRouter} from 'next/router';
 import React from 'react';
-import {calcDistance} from '../../utils/calc';
+import {calcPosition} from '../../utils/calc';
 import Compass from './Compass';
 import Confirm from './Confirm';
 import Share from './Share';
@@ -16,8 +16,10 @@ const Connect = React.memo(() => {
   const [isAvailableGeolocation, position, getCurrentPosition] =
     useGeolocation();
   const [isAvailableDirection, degrees, permissionReq] = useDirection();
-  const [distance, setDistance] = React.useState(0);
   const [partnerPosition, send, connect] = useSocket();
+
+  const [distance, setDistance] = React.useState(0);
+  const [direction, setDirection] = React.useState(0);
 
   const router = useRouter();
 
@@ -64,12 +66,16 @@ const Connect = React.memo(() => {
       position.lat !== 0 &&
       position.lon !== 0
     ) {
-      let distance = calcDistance(position, partnerPosition);
+      const calc = calcPosition(position, partnerPosition);
+      let distance = calc[0];
+      const direction = calc[1];
+
       if (distance < 0) {
         distance = 0;
       }
 
       setDistance(Math.floor(distance));
+      setDirection(direction);
     }
   }, [position, partnerPosition]);
 
@@ -89,7 +95,7 @@ const Connect = React.memo(() => {
       <Center height="95vh">
         <Box>
           <Center>
-            <Compass degrees={degrees} />
+            <Compass degrees={degrees + direction} />
           </Center>
 
           <Heading textAlign="center">あと、{distance}m</Heading>

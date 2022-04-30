@@ -1,6 +1,7 @@
 import {Center, Heading, Box} from '@chakra-ui/react';
 import {useRouter} from 'next/router';
 import React from 'react';
+import {calcDistance} from '../../utils/calc';
 import Compass from './Compass';
 import Confirm from './Confirm';
 import Share from './Share';
@@ -52,11 +53,25 @@ const Connect = React.memo(() => {
   }, [id, isAvailableGeolocation]);
 
   React.useEffect(() => {
-    send({
-      lat: position.latitude,
-      lon: position.longitude,
-    });
+    send(position);
   }, [position]);
+
+  // 2点の緯度経度から距離を求めるやつ
+  React.useEffect(() => {
+    if (
+      partnerPosition.lat !== 0 &&
+      partnerPosition.lon !== 0 &&
+      position.lat !== 0 &&
+      position.lon !== 0
+    ) {
+      let distance = calcDistance(position, partnerPosition);
+      if (distance < 0) {
+        distance = 0;
+      }
+
+      setDistance(Math.floor(distance));
+    }
+  }, [position, partnerPosition]);
 
   return (
     <>

@@ -1,14 +1,11 @@
 import React from 'react';
+import type {Position} from '../../utils/socket';
 
-const useGeolocation = (): [
-  boolean,
-  {latitude: number; longitude: number},
-  () => void
-] => {
+const useGeolocation = (): [boolean, Position, () => void] => {
   const [isAvailable, setAvailable] = React.useState(false);
-  const [position, setPosition] = React.useState({
-    latitude: 0,
-    longitude: 0,
+  const [position, setPosition] = React.useState<Position>({
+    lat: 0,
+    lon: 0,
   });
 
   React.useEffect(() => {
@@ -22,7 +19,7 @@ const useGeolocation = (): [
     navigator.geolocation.getCurrentPosition(
       position => {
         const {latitude, longitude} = position.coords;
-        setPosition({latitude, longitude});
+        setPosition({lat: latitude, lon: longitude});
       },
       err => {
         // TODO: err.codeで分けたい

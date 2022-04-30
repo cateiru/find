@@ -1,5 +1,8 @@
 // 端末の傾き補正（Android用）
 // https://www.w3.org/TR/orientation-event/
+
+import type {Position} from './socket';
+
 // Based on https://one-it-thing.com/6555/
 export const compassHeading = (
   alpha: number,
@@ -33,4 +36,24 @@ export const compassHeading = (
   }
 
   return compassHeading * (180 / Math.PI); // Compass Heading (in degrees)
+};
+
+// ヒュベニの近似式を使用して2地点の緯度経度から相対距離を求める
+// ref. https://komoriss.com/calculate-distance-between-two-points-from-latitude-and-longitude/
+export const calcDistance = (current: Position, target: Position) => {
+  const latDiff = Math.abs(current.lat - target.lat); // 2点の緯度差
+  const lonDiff = Math.abs(current.lon - target.lon); // 2点の軽度差
+  const ave = (latDiff + lonDiff) / 2;
+
+  return (
+    Math.sqrt(m(ave) * latDiff) ^ (2 + n(ave) * Math.cos(ave) * lonDiff) ^ 2
+  );
+};
+
+const m = (ave: number): number => {
+  return 6334834 / Math.sqrt((1 - 0.0066744 * Math.sin(ave)) ^ 2 ^ 3);
+};
+
+const n = (ave: number): number => {
+  return 6377397 / Math.sqrt((1 - 0.0066744 * Math.sin(ave)) ^ 2);
 };

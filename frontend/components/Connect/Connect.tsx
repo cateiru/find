@@ -1,6 +1,8 @@
 import {Center, Heading, Box} from '@chakra-ui/react';
 import {useRouter} from 'next/router';
 import React from 'react';
+import {useRecoilValue} from 'recoil';
+import {DebugModeState} from '../../utils/atom';
 import {calcDirec, calcPosition} from '../../utils/calc';
 import Compass from './Compass';
 import Confirm from './Confirm';
@@ -20,6 +22,8 @@ const Connect = React.memo(() => {
 
   const [distance, setDistance] = React.useState(0);
   const [direction, setDirection] = React.useState(0);
+
+  const debugMode = useRecoilValue(DebugModeState);
 
   const router = useRouter();
 
@@ -86,13 +90,19 @@ const Connect = React.memo(() => {
         }
         permissionReq={permissionReq}
       />
-      {JSON.stringify(position)}
-      <br />
-      {JSON.stringify(partnerPosition)}
-      <br />
-      {JSON.stringify(degrees)}
-      <br />
-      {direction}
+      {debugMode && (
+        <>
+          この端末の位置情報: {JSON.stringify(position)}
+          <br />
+          相手の端末の位置情報: {JSON.stringify(partnerPosition)}
+          <br />
+          この端末の方位: {degrees}
+          <br />
+          相手の端末の方位補正値: {direction}
+          <br />
+          相手との距離: {distance}
+        </>
+      )}
       <Center height="95vh">
         <Box>
           <Center>

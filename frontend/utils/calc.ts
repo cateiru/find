@@ -61,7 +61,7 @@ export const calcPosition = (current: Position, target: Position) => {
                 Math.sin((((current.lat + target.lat) / 2) * Math.PI) / 180)) ^
               2
           )) *
-          cos((((current.lat + target.lat) / 2) * Math.PI) / 180) *
+          Math.cos((((current.lat + target.lat) / 2) * Math.PI) / 180) *
           (current.lon - target.lon) *
           Math.PI) /
           180) ^

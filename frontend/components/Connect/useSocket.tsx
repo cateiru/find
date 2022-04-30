@@ -19,7 +19,9 @@ const useSocket = (): [
 
   const connect = (id: string) => {
     if (socketRef.current) {
-      socketRef.current.connect(id);
+      socketRef.current.connect();
+
+      socketRef.current.join(id);
 
       socketRef.current.receive(data => {
         setPartnerPosition(data);

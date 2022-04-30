@@ -1,7 +1,6 @@
 import {io, Socket} from 'socket.io-client';
 
-// const API_ENDPOINT = 'wss://api.find.cateiru.com';
-const API_ENDPOINT = 'ws://192.168.3.253:8080';
+const API_ENDPOINT = 'wss://api.find.cateiru.com';
 
 export interface Position {
   lat: number;
@@ -12,20 +11,16 @@ export class ConnectSocket {
   private socket: Socket;
 
   constructor() {
-    this.socket = io(API_ENDPOINT, {
-      withCredentials: true,
-    });
+    this.socket = io(API_ENDPOINT);
   }
 
-  public connect(id: string) {
-    console.log(id);
+  public connect() {
     this.socket.on('connect', () => {
-      this.join(id);
       console.log(this.socket.connected);
     });
   }
 
-  private join(id: string) {
+  public join(id: string) {
     this.socket.emit('join_room', {id: id});
   }
 

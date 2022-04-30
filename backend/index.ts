@@ -7,6 +7,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: ['https://find.cateiru.com/', 'http://192.168.3.253:3000'],
+    credentials: true,
   },
 });
 

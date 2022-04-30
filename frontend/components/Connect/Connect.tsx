@@ -93,11 +93,11 @@ const Connect = React.memo(() => {
       <br />
       {JSON.stringify(degrees)}
       <br />
-      {distance}
+      {direction}
       <Center height="95vh">
         <Box>
           <Center>
-            <Compass degrees={degrees + direction} />
+            <Compass degrees={(degrees + direction) % 360} />
           </Center>
 
           <Heading textAlign="center">あと、{distance}m</Heading>

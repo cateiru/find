@@ -67,15 +67,13 @@ const Connect = React.memo(() => {
       position.lon !== 0
     ) {
       let distance = calcPosition(position, partnerPosition);
-
-      if (distance < 0) {
+      // 値が負になるとNaNになるため0にする
+      if (isNaN(distance)) {
         distance = 0;
       }
-
       setDistance(Math.floor(distance));
 
       const d = calcDirec(position, partnerPosition);
-
       setDirection(d);
     }
   }, [position, partnerPosition]);

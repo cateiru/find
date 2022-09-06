@@ -25,7 +25,7 @@ const Home = () => {
 
   const handleNew = () => {
     let key = '';
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 15; i++) {
       key += Math.floor(Math.random() * 16).toString(16);
     }
 

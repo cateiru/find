@@ -33,7 +33,7 @@ const Connect = React.memo(() => {
 
     if (typeof query['id'] === 'string') {
       const queryId = query['id'];
-      if (/[0-9A-Z]{10}/.test(queryId)) {
+      if (/[0-9A-Za-z]{15}/.test(queryId)) {
         setIsAvailable(true);
         setId(query['id']);
         connect(query['id']);
